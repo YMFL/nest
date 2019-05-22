@@ -26,7 +26,8 @@ export class UsersService implements IUsersService {
   }
 
   async edit(user: User): Promise<User> {
-    return await this.usersRepository.save(user);
+    await this.usersRepository.update(user.id, user)
+    return user;
   }
 
   async remove(id: number): Promise<boolean> {

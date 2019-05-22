@@ -13,7 +13,7 @@ import {
 import {User} from './entity/user.entity'
 import { UsersService } from './services/users.service';
 import { UserIdPipe } from './pipes/user-id.pipe';
-import { CreateUserDto } from './dtos/create-user.dto';
+import { UserDto,UserNoIdDto } from './dtos/user.dto';
 
 
 @Controller('users')
@@ -31,12 +31,12 @@ export class UsersController {
   }
 
   @Post()
-  async create(@Body() user:CreateUserDto) :Promise<User>{
+  async create(@Body() user:UserNoIdDto) :Promise<User>{
     return await this.usersService.create(user);
   }
 
   @Put()
-  async edit(@Body() user:CreateUserDto) :Promise<User> {
+  async edit(@Body() user:UserDto) :Promise<User> {
     return await this.usersService.edit(user);
   }
 
