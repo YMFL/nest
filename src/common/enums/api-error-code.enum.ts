@@ -5,4 +5,5 @@ export enum ApiErrorCode {
   USER_ID_INVALID = 10001, // 用户id无效
   USER_NAME_INVALID = 10002, // 用户id无效
   USER_AGE_INVALID = 10003, // 用户id无效
+  USER_NOID_INVALID = 10004, // 用户id必须为空
 }

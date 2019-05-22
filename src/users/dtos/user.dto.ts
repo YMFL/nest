@@ -1,5 +1,5 @@
 
-import {IsString, IsInt, IsNotEmpty, Min, Max, IsOptional} from 'class-validator';
+import {IsString, IsInt, IsNotEmpty, Min, Max, IsOptional,IsEmpty} from 'class-validator';
 import {ApiErrorCode} from "common/enums/api-error-code.enum";
 import {Type} from "class-transformer";
 import {User} from "../entity/user.entity";
@@ -23,6 +23,9 @@ export class UserDto extends User{
 }
 
 export class UserNoIdDto extends User{
+
+  @IsEmpty({ message: 'id必须为空', context: { errorCode: ApiErrorCode.USER_NOID_INVALID } })
+  readonly id: number;
 
   @IsNotEmpty({message: '用户姓名是必不可少的', context: {errorCode: ApiErrorCode.USER_NAME_INVALID}})
   @IsString({message: '用户姓名是必不可少的', context: {errorCode: ApiErrorCode.USER_NAME_INVALID}})
