@@ -1,4 +1,4 @@
-import { User } from './user.interface';
+import {User} from '../entity/user.entity'
 
 export interface IUsersService {
   findAll(): Promise<User[]>;

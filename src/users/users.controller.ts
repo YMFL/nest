@@ -10,10 +10,11 @@ import {
   HttpException,
   HttpStatus,
 } from '@nestjs/common';
-import { User } from './interfaces/user.interface';
+import {User} from './entity/user.entity'
 import { UsersService } from './services/users.service';
 import { UserIdPipe } from './pipes/user-id.pipe';
 import { CreateUserDto } from './dtos/create-user.dto';
+
 
 @Controller('users')
 export class UsersController {
@@ -26,7 +27,6 @@ export class UsersController {
 
   @Get(':id')
   async findOne(@Param('id', new UserIdPipe()) id): Promise<User> {
-    console.log(id)
     return await this.usersService.findOne(id);
   }
 
