@@ -13,7 +13,7 @@ export class UsersService implements IUsersService {
   ) {
   }
 
-  async findAll(page = 1, pageSize = 10): Promise<PageRes> {
+  async findAll(page:number = 1, pageSize:number = 10): Promise<PageRes> {
     let [list, count] = await this.usersRepository.findAndCount(
       {
         order: {
@@ -46,7 +46,7 @@ export class UsersService implements IUsersService {
   }
 
   async remove(id: number): Promise<boolean> {
-    // return await this.usersRepository.delete(id)
-    return false
+    await this.usersRepository.delete(id)
+    return true
   }
 }
