@@ -5,6 +5,7 @@ import {
   ParseIntPipe,
   Get,
   Post,
+  Query,
   Delete,
   Put,
   HttpException,
@@ -13,7 +14,8 @@ import {
 import {User} from './entity/user.entity'
 import {UsersService} from './services/users.service';
 import {UserIdPipe} from './pipes/user-id.pipe';
-import {UserDto, UserNoIdDto} from './dtos/user.dto';
+import {UserDto, UserNoIdDto, PageInfo} from './dtos/user.dto';
+import {PageRes} from "../common/entity/pageRes.entity";
 
 
 @Controller('users')
@@ -22,8 +24,8 @@ export class UsersController {
   }
 
   @Get()
-  async findAll(): Promise<User[]> {
-    return await this.usersService.findAll();
+  async findAll(@Query() pageInfo: PageInfo): Promise<PageRes> {
+    return await this.usersService.findAll(pageInfo.page, pageInfo.pageSize);
   }
 
   @Get(':id')

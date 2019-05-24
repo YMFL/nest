@@ -3,6 +3,7 @@ import {InjectRepository} from '@nestjs/typeorm';
 import {IUsersService} from '../interfaces/user-service.interface';
 import {User} from '../entity/user.entity'
 import {Repository} from 'typeorm';
+import {PageRes} from '../../common/entity/pageRes.entity';
 
 @Injectable()
 export class UsersService implements IUsersService {
@@ -12,8 +13,22 @@ export class UsersService implements IUsersService {
   ) {
   }
 
-  async findAll(): Promise<User[]> {
-    return await this.usersRepository.find();
+  async findAll(page = 1, pageSize = 10): Promise<PageRes> {
+    let [list, count] = await this.usersRepository.findAndCount(
+      {
+        order: {
+          createdAt: "DESC"
+        },
+        take: pageSize,
+        skip: (page - 1) * pageSize
+      }
+    )
+    let pageRes = new PageRes()
+    pageRes.list = list
+    pageRes.page = page
+    pageRes.count = count
+    pageRes.pageSize = pageSize
+    return pageRes
   }
 
   async findOne(id: number): Promise<User> {
