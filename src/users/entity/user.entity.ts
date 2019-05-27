@@ -1,8 +1,14 @@
-import {Entity, PrimaryGeneratedColumn, Column, BaseEntity, CreateDateColumn, UpdateDateColumn} from "typeorm";
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  BaseEntity,
+  CreateDateColumn,
+  UpdateDateColumn,
+} from 'typeorm';
 
 @Entity()
-export class User extends BaseEntity{
-
+export class User extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -13,8 +19,8 @@ export class User extends BaseEntity{
   age: number;
 
   @CreateDateColumn()
-  createdAt:string;
+  createdAt: string;
 
   @UpdateDateColumn()
-  updatedAt: string
+  updatedAt: string;
 }

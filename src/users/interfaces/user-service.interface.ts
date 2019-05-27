@@ -1,8 +1,13 @@
-import {User} from '../entity/user.entity'
-import {PageRes} from "../../common/entity/pageRes.entity";
+import { User } from '../entity/user.entity';
+import { PageRes } from '../../common/entity/pageRes.entity';
 
 export interface IUsersService {
-  findAll(page: number, pageSize: number): Promise<PageRes>;
+  findAll(
+    page: number,
+    pageSize: number,
+    name: string,
+    age: number,
+  ): Promise<PageRes>;
 
   findOne(id: number): Promise<User>;
 

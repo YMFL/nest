@@ -11,21 +11,25 @@ import {
   HttpException,
   HttpStatus,
 } from '@nestjs/common';
-import {User} from './entity/user.entity'
-import {UsersService} from './services/users.service';
-import {UserIdPipe} from './pipes/user-id.pipe';
-import {UserDto, UserNoIdDto, PageInfo} from './dtos/user.dto';
-import {PageRes} from "../common/entity/pageRes.entity";
-
+import { User } from './entity/user.entity';
+import { UsersService } from './services/users.service';
+import { UserIdPipe } from './pipes/user-id.pipe';
+import { UserDto, UserNoIdDto, PageInfo } from './dtos/user.dto';
+import { PageRes } from '../common/entity/pageRes.entity';
 
 @Controller('users')
 export class UsersController {
-  constructor(private readonly usersService: UsersService) {
-  }
+  constructor(private readonly usersService: UsersService) {}
 
   @Get()
-  async findAll(@Query() pageInfo: PageInfo): Promise<PageRes> {
-    return await this.usersService.findAll(pageInfo.page, pageInfo.pageSize);
+  async findAll(@Query() pageInfo: PageInfo, @Query() query): Promise<PageRes> {
+    console.log(pageInfo);
+    return await this.usersService.findAll(
+      pageInfo.page,
+      pageInfo.pageSize,
+      query.name,
+      query.age,
+    );
   }
 
   @Get(':id')
