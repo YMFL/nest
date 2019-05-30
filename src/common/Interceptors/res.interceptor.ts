@@ -1,7 +1,7 @@
 import { ExecutionContext, Injectable, NestInterceptor } from '@nestjs/common';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { Res } from '../entity/res.entity';
+import { Res } from '../entity/res';
 
 @Injectable()
 export class ReqInterceptor implements NestInterceptor {

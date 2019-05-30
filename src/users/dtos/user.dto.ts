@@ -8,7 +8,7 @@ import {
   IsEmpty,
   IsDefined,
 } from 'class-validator';
-import { ApiErrorCode } from 'common/enums/api-error-code.enum';
+import { ApiErrorCode } from '../../common/enums/api-error-code.enum';
 import { Type } from 'class-transformer';
 import { User } from '../entity/user.entity';
 

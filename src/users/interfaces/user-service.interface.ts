@@ -1,5 +1,5 @@
 import { User } from '../entity/user.entity';
-import { PageRes } from '../../common/entity/pageRes.entity';
+import { PageRes } from '../../common/entity/pageRes';
 
 export interface IUsersService {
   findAll(

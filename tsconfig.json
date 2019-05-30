@@ -6,6 +6,7 @@
     "removeComments": true,
     "noLib": false,
     "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "target": "es6",
@@ -20,6 +21,7 @@
     "node_modules",
     "**/*.spec.ts"
   ],
+  "esModuleInterop": true,
   "emitDecoratorMetadata": true,
   "experimentalDecorators": true
 }

@@ -10,20 +10,22 @@ import {
   Put,
   HttpException,
   HttpStatus,
+  UseGuards,
 } from '@nestjs/common';
 import { User } from './entity/user.entity';
 import { UsersService } from './services/users.service';
 import { UserIdPipe } from './pipes/user-id.pipe';
 import { UserDto, UserNoIdDto, PageInfo } from './dtos/user.dto';
-import { PageRes } from '../common/entity/pageRes.entity';
+import { PageRes } from '../common/entity/pageRes';
+import { AuthGuard } from '../common/guards/auth.guard';
 
 @Controller('users')
+@UseGuards(new AuthGuard())
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
   @Get()
   async findAll(@Query() pageInfo: PageInfo, @Query() query): Promise<PageRes> {
-    console.log(pageInfo);
     return await this.usersService.findAll(
       pageInfo.page,
       pageInfo.pageSize,
