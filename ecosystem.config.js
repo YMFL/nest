@@ -1,7 +1,7 @@
 module.exports = {
   apps : [{
     name: 'nestPro',
-    script: 'npm run prestart:prod',
+    script: 'NODE_ENV=production node dist/main.js',
     instances: 1,
     autorestart: true,
     watch: false,
