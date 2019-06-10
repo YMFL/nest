@@ -4,6 +4,8 @@ import { IUsersService } from '../interfaces/user-service.interface';
 import { User } from '../entity/user.entity';
 import { Repository } from 'typeorm';
 import { PageRes } from '../../common/entity/pageRes';
+import jwt from 'jwt-simple'
+import { MyLogger } from '../../common/utils/myLogger'
 
 @Injectable()
 export class UsersService implements IUsersService {
@@ -18,6 +20,7 @@ export class UsersService implements IUsersService {
     name: string,
     age: number,
   ): Promise<PageRes> {
+
     let where = [];
     name && where.push({ name });
     age && where.push({ age });
@@ -34,6 +37,7 @@ export class UsersService implements IUsersService {
     pageRes.page = page;
     pageRes.count = count;
     pageRes.pageSize = pageSize;
+    MyLogger.error(JSON.stringify(pageRes))
     return pageRes;
   }
 
@@ -41,9 +45,13 @@ export class UsersService implements IUsersService {
     return await this.usersRepository.findOne(id);
   }
 
-  async create(user: User): Promise<User> {
+  async create(user: User): Promise<object> {
     await this.usersRepository.insert(user);
-    return user;
+    console.log(user.id)
+    var token = jwt.encode(user.id,'yqh');
+    console.log(token)
+    console.log(jwt.decode(token,'yqh'))
+    return {token};
   }
 
   async edit(user: User): Promise<User> {

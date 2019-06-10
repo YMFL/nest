@@ -11,7 +11,7 @@ export interface IUsersService {
 
   findOne(id: number): Promise<User>;
 
-  create(User): Promise<User>;
+  create(User): Promise<object>;
 
   edit(User): Promise<User>;
 
