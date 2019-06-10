@@ -6,12 +6,14 @@ import { Repository } from 'typeorm';
 import { PageRes } from '../../common/entity/pageRes';
 import jwt from 'jwt-simple'
 import { MyLogger } from '../../common/utils/myLogger'
+import { Redis } from '../../common/utils/redis'
 
 @Injectable()
 export class UsersService implements IUsersService {
   constructor(
     @InjectRepository(User)
     private readonly usersRepository: Repository<User>,
+    private redis: Redis
   ) {}
 
   async findAll(
@@ -20,7 +22,6 @@ export class UsersService implements IUsersService {
     name: string,
     age: number,
   ): Promise<PageRes> {
-
     let where = [];
     name && where.push({ name });
     age && where.push({ age });
@@ -47,10 +48,12 @@ export class UsersService implements IUsersService {
 
   async create(user: User): Promise<object> {
     await this.usersRepository.insert(user);
-    console.log(user.id)
+    // console.log(user.id)
     var token = jwt.encode(user.id,'yqh');
-    console.log(token)
-    console.log(jwt.decode(token,'yqh'))
+    this.redis.set(token);
+    // this.redis.get(token)
+    // console.log(token)
+    // console.log(jwt.decode(token,'yqh'))
     return {token};
   }
 
