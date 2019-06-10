@@ -4,16 +4,16 @@ import { IUsersService } from '../interfaces/user-service.interface';
 import { User } from '../entity/user.entity';
 import { Repository } from 'typeorm';
 import { PageRes } from '../../common/entity/pageRes';
-import jwt from 'jwt-simple'
-import { MyLogger } from '../../common/utils/myLogger'
-import { Redis } from '../../common/utils/redis'
+import jwt from 'jwt-simple';
+import { MyLogger } from '../../common/utils/myLogger';
+import { Redis } from '../../common/utils/redis';
 
 @Injectable()
 export class UsersService implements IUsersService {
   constructor(
     @InjectRepository(User)
     private readonly usersRepository: Repository<User>,
-    private redis: Redis
+    private redis: Redis,
   ) {}
 
   async findAll(
@@ -38,7 +38,7 @@ export class UsersService implements IUsersService {
     pageRes.page = page;
     pageRes.count = count;
     pageRes.pageSize = pageSize;
-    MyLogger.error(JSON.stringify(pageRes))
+    MyLogger.error(JSON.stringify(pageRes));
     return pageRes;
   }
 
@@ -49,12 +49,12 @@ export class UsersService implements IUsersService {
   async create(user: User): Promise<object> {
     await this.usersRepository.insert(user);
     // console.log(user.id)
-    var token = jwt.encode(user.id,'yqh');
+    let token = jwt.encode(user.id, 'yqh');
     this.redis.set(token);
     // this.redis.get(token)
     // console.log(token)
     // console.log(jwt.decode(token,'yqh'))
-    return {token};
+    return { token };
   }
 
   async edit(user: User): Promise<User> {
