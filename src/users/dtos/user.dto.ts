@@ -76,28 +76,3 @@ export class UserNoIdDto extends User {
   })
   readonly age: number;
 }
-
-export class PageInfo {
-  @Type(() => Number)
-  @Min(1, {
-    message: '参数必须大于1',
-    context: { errorCode: ApiErrorCode.USER_PAGE_INVALID },
-  })
-  @IsInt({
-    message: '必须是整数',
-    context: { errorCode: ApiErrorCode.USER_PAGE_INVALID },
-  })
-  readonly page: number;
-
-  @Type(() => Number)
-  @IsOptional()
-  @Min(1, {
-    message: '参数必须大于1',
-    context: { errorCode: ApiErrorCode.USER_PAGE_INVALID },
-  })
-  @IsInt({
-    message: '必须是整数',
-    context: { errorCode: ApiErrorCode.USER_PAGE_INVALID },
-  })
-  readonly pageSize: number;
-}

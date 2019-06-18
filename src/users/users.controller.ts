@@ -15,9 +15,12 @@ import {
 import { User } from './entity/user.entity';
 import { UsersService } from './services/users.service';
 import { UserIdPipe } from './pipes/user-id.pipe';
-import { UserDto, UserNoIdDto, PageInfo } from './dtos/user.dto';
+import { UserDto, UserNoIdDto } from './dtos/user.dto';
+import { PageInfo } from '../common/dtos/pageInfo.entity';
+
 import { PageRes } from '../common/entity/pageRes';
 import { AuthGuard } from '../common/guards/auth.guard';
+
 
 @Controller('users')
 @UseGuards(new AuthGuard())
@@ -33,11 +36,29 @@ export class UsersController {
       query.age,
     );
   }
+  @Get('abc')
+  async findAll12(@Query() pageInfo: PageInfo, @Query() query): Promise<PageRes> {
+    console.log('abc')
+    return await this.usersService.findAll(
+      pageInfo.page,
+      pageInfo.pageSize,
+      query.name,
+      query.age,
+    );
+  }
 
   @Get(':id')
   async findOne(@Param('id', new UserIdPipe()) id): Promise<User> {
     return await this.usersService.findOne(id);
   }
+
+  @Get('abc/:id')
+  async findOne123(@Param('id', new UserIdPipe()) id): Promise<User> {
+    console.log('abc123')
+    console.log(id)
+    return await this.usersService.findOne(id);
+  }
+
 
   @Post()
   async create(@Body() user: UserNoIdDto): Promise<object> {
@@ -53,4 +74,6 @@ export class UsersController {
   async remove(@Param('id', new UserIdPipe()) id): Promise<boolean> {
     return await this.usersService.remove(id);
   }
+
+
 }

@@ -4,7 +4,12 @@ import { IUsersService } from '../interfaces/user-service.interface';
 import { User } from '../entity/user.entity';
 import { Repository } from 'typeorm';
 import { PageRes } from '../../common/entity/pageRes';
+/**
+ * token=jwt.encode(user.id, 'yqh');
+ * jwt.decode(token,'yqh')
+ */
 import jwt from 'jwt-simple';
+
 import { MyLogger } from '../../common/utils/myLogger';
 import { Redis } from '../../common/utils/redis';
 
