@@ -5,10 +5,10 @@ import { Injectable } from '@nestjs/common';
 export class Redis {
   public client;
   constructor() {
-    if (!this.client) {
-      console.log('redis client');
+    // if (!this.client) {
+    //   console.log('redis client');
       this.client = redis.createClient();
-    }
+    // }
   }
 
   async get(key: string): Promise<string> {

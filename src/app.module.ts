@@ -7,21 +7,17 @@ import { AccountModule } from './account/account.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Connection } from 'typeorm';
 import { ReqInterceptor } from './common/Interceptors/res.interceptor';
-import { Redis } from './common/utils/redis';
 
-@Global()
 @Module({
   imports: [TypeOrmModule.forRoot(), UsersModule, AccountModule],
   controllers: [AppController],
   providers: [
     AppService,
-    Redis,
     {
       provide: APP_INTERCEPTOR,
       useClass: ReqInterceptor,
     },
   ],
-  exports: [Redis],
 })
 export class AppModule {
   constructor(private readonly connection: Connection) {}

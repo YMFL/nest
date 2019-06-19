@@ -12,9 +12,7 @@ import {
   HttpStatus,
   UseGuards,
 } from '@nestjs/common';
-import { AuthGuard } from '../common/guards/auth.guard';
 import { AccountService } from './services/account.service';
-import { UserDto, UserNoIdDto } from '../users/dtos/user.dto';
 import { PageInfo } from '../common/dtos/pageInfo.entity';
 
 import { UserIdPipe } from '../users/pipes/user-id.pipe';
@@ -24,7 +22,6 @@ import { Account } from './entity/account.entity';
 import { AccountDto, AccountNoIdDto } from './dtos/account.entity';
 
 @Controller('account')
-@UseGuards(new AuthGuard())
 export class AccountController {
   constructor(private readonly accountService: AccountService) {}
 

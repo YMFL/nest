@@ -13,27 +13,19 @@ import { ApiErrorCode } from '../enums/api-error-code.enum';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
-
-  private redis: Redis = new Redis();
-
   constructor(
-    // private redis: Redis
-    // redis: Redis = new Redis();
+    private redis: Redis
   ) {
-    console.log('constructor')
   }
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const request = context.switchToHttp().getRequest();
-    console.log('guard')
     if (request.url.indexOf('account') >= 0 && request.method === 'POST') {
-      console.log(request.method);
       return true;
     } else {
       if (request.headers.token) {
         try {
           let res = await this.redis.get(request.headers.token);
-          console.log(res)
           if (res === 't') {
             return true;
           } else {
@@ -51,7 +43,11 @@ export class AuthGuard implements CanActivate {
           );
         }
       } else {
-        return false;
+        throw new ApiException(
+          'token错误',
+          ApiErrorCode.USER_ID_OUT,
+          HttpStatus.BAD_REQUEST,
+        );;
       }
     }
   }
