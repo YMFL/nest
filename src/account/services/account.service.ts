@@ -28,8 +28,10 @@ export class AccountService {
     let pageRes = new PageRes();
     for (let x in list) {
       let account = new Account();
-      account.id = list[x].id;
+      account.userId = list[x].userId;
       account.mobile = list[x].mobile;
+      account.name = list[x].name;
+      account.address = list[x].address;
       account.is_del = list[x].is_del;
       account.createdAt = list[x].createdAt;
       account.updatedAt = list[x].updatedAt;
@@ -48,12 +50,12 @@ export class AccountService {
     acc.password = md5(account.password);
     acc.mobile = account.mobile;
     await this.accountRepository.insert(acc);
-    let token = jwt.encode(acc.id, 'yqh');
+    let token = jwt.encode(acc.userId, 'yqh');
     this.redis.set(token);
     return { token };
   }
   async edit(account: Account): Promise<Account> {
-    await this.accountRepository.update(account.id, account);
+    await this.accountRepository.update(account.userId, account);
     return account;
   }
 
