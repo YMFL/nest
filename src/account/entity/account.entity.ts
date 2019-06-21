@@ -14,13 +14,12 @@ import { CommonEnum } from '../../common/enums/comminEnum';
 
 @Entity()
 export class Account extends BaseEntity {
-
   @PrimaryGeneratedColumn()
   userId: number;
 
   @Column({
     unique: true,
-    length:20
+    length: 20,
   })
   mobile: string;
 
@@ -28,12 +27,13 @@ export class Account extends BaseEntity {
   password: string;
 
   @Column({
-    length:10
+    length: 10,
   })
   name: string;
 
   @Column({
-    length:50
+    length: 50,
+    nullable: true,
   })
   address: string;
 

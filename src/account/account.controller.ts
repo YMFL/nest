@@ -13,20 +13,23 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { AccountService } from './services/account.service';
-import { PageInfo } from '../common/dtos/pageInfo.entity';
+import { PageInfoDto } from '../common/dtos/pageInfo.dto';
 
 import { UserIdPipe } from '../users/pipes/user-id.pipe';
 
 import { PageRes } from '../common/entity/pageRes';
 import { Account } from './entity/account.entity';
-import { AccountDto, AccountNoIdDto } from './dtos/account.entity';
+import { AccountDto, AccountNoIdDto } from './dtos/account.dto';
 
 @Controller('account')
 export class AccountController {
   constructor(private readonly accountService: AccountService) {}
 
   @Get()
-  async findAll(@Query() pageInfo: PageInfo, @Query() query): Promise<PageRes> {
+  async findAll(
+    @Query() pageInfo: PageInfoDto,
+    @Query() query,
+  ): Promise<PageRes> {
     return await this.accountService.findAll(pageInfo.page, pageInfo.pageSize);
   }
 
@@ -35,7 +38,7 @@ export class AccountController {
     return await this.accountService.findOne(id);
   }
 
-  @Post('/login')
+  @Post('login')
   async create(@Body() account: AccountNoIdDto): Promise<object> {
     return await this.accountService.create(account);
   }

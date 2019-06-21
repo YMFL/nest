@@ -7,7 +7,7 @@ export class Redis {
   constructor() {
     // if (!this.client) {
     //   console.log('redis client');
-      this.client = redis.createClient();
+    this.client = redis.createClient();
     // }
   }
 

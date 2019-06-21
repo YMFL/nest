@@ -13,7 +13,7 @@ import {
 import { ApiErrorCode } from '../../common/enums/api-error-code.enum';
 import { Type } from 'class-transformer';
 
-export class PageInfo {
+export class PageInfoDto {
   @Type(() => Number)
   @Min(1, {
     message: '参数必须大于1',

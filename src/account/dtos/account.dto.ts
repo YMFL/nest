@@ -46,6 +46,15 @@ export class AccountNoIdDto extends Account {
   })
   readonly mobile: string;
 
+  @IsNotEmpty({
+    message: '用户姓名是必不可少的',
+    context: { errorCode: ApiErrorCode.USER_NAME_INVALID },
+  })
+  @IsString({
+    message: '用户姓名是必不可少的',
+    context: { errorCode: ApiErrorCode.USER_NAME_INVALID },
+  })
+  readonly name: string;
   @Length(6, 20, {
     message: '密码长度10至20位',
     context: { errorCode: ApiErrorCode.ARG_MOBILE_INVALID },

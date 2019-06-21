@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, HttpStatus } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Redis } from '../../common/utils/redis';
 import { Account } from '../entity/account.entity';
@@ -6,6 +6,8 @@ import { Repository } from 'typeorm';
 import { PageRes } from '../../common/entity/pageRes';
 import jwt from 'jwt-simple';
 import md5 from 'md5';
+import { ApiException } from '../../common/exceptions/api.exception';
+import { ApiErrorCode } from '../../common/enums/api-error-code.enum';
 
 @Injectable()
 export class AccountService {
@@ -45,14 +47,42 @@ export class AccountService {
   async findOne(id: number): Promise<Account> {
     return await this.accountRepository.findOne(id);
   }
+  async isExist(account: Account): Promise<number> {
+    try {
+      let [list, count] = await this.accountRepository.findAndCount({
+        mobile: account.mobile,
+      });
+      return count;
+    } catch (e) {
+      throw new ApiException(
+        e.message,
+        ApiErrorCode.ACCOUNT_COMMON_INVALID,
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+  }
   async create(account: Account): Promise<object> {
-    let acc = new Account();
-    acc.password = md5(account.password);
-    acc.mobile = account.mobile;
-    await this.accountRepository.insert(acc);
-    let token = jwt.encode(acc.userId, 'yqh');
-    this.redis.set(token);
-    return { token };
+    try {
+      let exist = await this.isExist(account);
+      if (exist === 1) {
+        throw new Error('该手机号已注册，请登录');
+      } else {
+        let acc = new Account();
+        acc.password = md5(account.password);
+        acc.mobile = account.mobile;
+        acc.name = account.name;
+        await this.accountRepository.insert(acc);
+        let token = jwt.encode(acc.userId, 'yqh');
+        this.redis.set(token);
+        return { token };
+      }
+    } catch (e) {
+      throw new ApiException(
+        e.message,
+        ApiErrorCode.ACCOUNT_COMMON_INVALID,
+        HttpStatus.BAD_REQUEST,
+      );
+    }
   }
   async edit(account: Account): Promise<Account> {
     await this.accountRepository.update(account.userId, account);

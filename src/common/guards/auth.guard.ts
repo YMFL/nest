@@ -13,10 +13,7 @@ import { ApiErrorCode } from '../enums/api-error-code.enum';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
-  constructor(
-    private redis: Redis
-  ) {
-  }
+  constructor(private redis: Redis) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const request = context.switchToHttp().getRequest();
@@ -47,7 +44,7 @@ export class AuthGuard implements CanActivate {
           'token错误',
           ApiErrorCode.USER_ID_OUT,
           HttpStatus.BAD_REQUEST,
-        );;
+        );
       }
     }
   }

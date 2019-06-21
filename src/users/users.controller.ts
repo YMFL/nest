@@ -16,17 +16,19 @@ import { User } from './entity/user.entity';
 import { UsersService } from './services/users.service';
 import { UserIdPipe } from './pipes/user-id.pipe';
 import { UserDto, UserNoIdDto } from './dtos/user.dto';
-import { PageInfo } from '../common/dtos/pageInfo.entity';
+import { PageInfoDto } from '../common/dtos/pageInfo.dto';
 
 import { PageRes } from '../common/entity/pageRes';
-
 
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
   @Get()
-  async findAll(@Query() pageInfo: PageInfo, @Query() query): Promise<PageRes> {
+  async findAll(
+    @Query() pageInfo: PageInfoDto,
+    @Query() query,
+  ): Promise<PageRes> {
     return await this.usersService.findAll(
       pageInfo.page,
       pageInfo.pageSize,
