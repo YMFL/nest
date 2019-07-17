@@ -4,7 +4,7 @@ import { map } from 'rxjs/operators';
 import { Res } from '../entity/res';
 
 @Injectable()
-export class ReqInterceptor implements NestInterceptor {
+export class ResInterceptor implements NestInterceptor {
   intercept(
     context: ExecutionContext,
     call$: Observable<any>,

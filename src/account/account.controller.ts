@@ -38,7 +38,7 @@ export class AccountController {
     return await this.accountService.findOne(id);
   }
 
-  @Post('login')
+  @Post('register')
   async create(@Body() account: AccountNoIdDto): Promise<object> {
     return await this.accountService.create(account);
   }
