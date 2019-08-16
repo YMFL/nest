@@ -17,7 +17,6 @@ export class AuthGuard implements CanActivate {
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const request = context.switchToHttp().getRequest();
-    console.log(request.url);
     if (
       (request.url.indexOf('account') >= 0 && request.method === 'POST') ||
       request.url.indexOf('public')
